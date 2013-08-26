@@ -1,0 +1,43 @@
+﻿<f:RibbonWindow x:Class="HJ.Shell.View.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:f="clr-namespace:Fluent;assembly=Fluent"
+        xmlns:prism="http://www.codeplex.com/CompositeWPF"
+        xmlns:ad="http://avalondock.codeplex.com"
+        Title="ShellView" Height="555" Width="910">
+    <DockPanel LastChildFill="True">
+        <f:Ribbon DockPanel.Dock="Top" x:Name="ShellRibbon" prism:RegionManager.RegionName="ShellRibbon">
+            
+            <f:RibbonTabItem Header="Home">
+                <f:RibbonGroupBox Header="Add / Remove">
+                    <f:Button Header="Add" />
+                    <f:Button Header="Remove" />
+                </f:RibbonGroupBox>
+            </f:RibbonTabItem>
+
+            <f:Ribbon.Menu>
+                <f:Backstage>
+                    <f:BackstageTabControl>
+                        <f:Button Header="Close" />
+                    </f:BackstageTabControl>
+                </f:Backstage>
+            </f:Ribbon.Menu>
+        </f:Ribbon>
+    
+        <Grid>
+
+            <ad:DockingManager Background="AliceBlue" x:Name="WorkspaceRegion" prism:RegionManager.RegionName="WorkspaceRegion">
+                <ad:LayoutRoot>
+                    <ad:LayoutPanel>
+                        <ad:LayoutDocumentPaneGroup>
+                            <ad:LayoutDocumentPane>
+
+                            </ad:LayoutDocumentPane>
+                        </ad:LayoutDocumentPaneGroup>
+                    </ad:LayoutPanel>
+                </ad:LayoutRoot>
+            </ad:DockingManager>        
+        </Grid>
+    
+    </DockPanel>
+</f:RibbonWindow>

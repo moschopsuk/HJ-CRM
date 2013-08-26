@@ -1,0 +1,208 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="1.0">
+    <Schema Namespace="DataBaseModel" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityType Name="Customer">
+        <Key>
+          <PropertyRef Name="CustomerID" />
+        </Key>
+        <Property Name="CustomerID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="CustParentID" Type="Edm.Int32" Nullable="true" />
+        <Property Name="AccountType" Type="Edm.String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
+        <Property Name="FirstName" Type="Edm.String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="MiddleName" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="SurName" Type="Edm.String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="Title" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="CompanyName" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CompanyRole" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="Telephone" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="Mobile" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="Fax" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="Email" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="AdressLine1" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="AdressLine2" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="City" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="County" Type="Edm.String" Nullable="true" MaxLength="25" Unicode="true" FixedLength="false" />
+        <Property Name="Country" Type="Edm.String" Nullable="true" MaxLength="25" Unicode="true" FixedLength="false" />
+        <Property Name="PostCode" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CustomerNotes" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
+        <NavigationProperty Name="Devices" Relationship="DataBaseModel.FK_Devices_Customers" FromRole="Customer" ToRole="Device" />
+        <NavigationProperty Name="Invoices" Relationship="DataBaseModel.FK_Invoices_Customers" FromRole="Customer" ToRole="Invoice" />
+      </EntityType>
+      <EntityType Name="Product">
+        <Key>
+          <PropertyRef Name="ProductID" />
+        </Key>
+        <Property Name="ProductID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="75" Unicode="false" FixedLength="false" />
+        <Property Name="ProductGroup" Type="Edm.String" Nullable="true" MaxLength="75" Unicode="false" FixedLength="false" />
+        <Property Name="ProductPrice" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
+        <Property Name="ProductCode" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="isDiscontinued" Type="Edm.Boolean" Nullable="false" />
+      </EntityType>
+      <EntityType Name="Device">
+        <Key>
+          <PropertyRef Name="DeviceID" />
+        </Key>
+        <Property Name="DeviceID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="CustomerID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="OrderID" Type="Edm.Int32" Nullable="true" />
+        <Property Name="InvoiceID" Type="Edm.Int32" Nullable="true" />
+        <Property Name="DeviceLabel" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="DeviceType" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="IMEI" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SimNumber" Type="Edm.Int32" Nullable="true" />
+        <Property Name="SimProvider" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="false" FixedLength="false" />
+        <Property Name="VoiceNumber" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="false" FixedLength="false" />
+        <Property Name="ContractFrom" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="ContractTo" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="Comments" Type="Edm.String" Nullable="true" MaxLength="Max" Unicode="false" FixedLength="false" />
+        <NavigationProperty Name="Customer" Relationship="DataBaseModel.FK_Devices_Customers" FromRole="Device" ToRole="Customer" />
+        <NavigationProperty Name="Invoice" Relationship="DataBaseModel.FK_Devices_Invoices" FromRole="Device" ToRole="Invoice" />
+        <NavigationProperty Name="Order" Relationship="DataBaseModel.FK_Devices_Orders" FromRole="Device" ToRole="Order" />
+      </EntityType>
+      <EntityType Name="Invoice">
+        <Key>
+          <PropertyRef Name="InvoiceID" />
+        </Key>
+        <Property Name="InvoiceID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="CustomerID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="InvoiceDate" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="IsPaid" Type="Edm.Boolean" Nullable="true" />
+        <Property Name="OrderID" Type="Edm.Int32" Nullable="false" />
+        <NavigationProperty Name="Customer" Relationship="DataBaseModel.FK_Invoices_Customers" FromRole="Invoice" ToRole="Customer" />
+        <NavigationProperty Name="Devices" Relationship="DataBaseModel.FK_Devices_Invoices" FromRole="Invoice" ToRole="Device" />
+        <NavigationProperty Name="Order" Relationship="DataBaseModel.FK_Invoices_Orders" FromRole="Invoice" ToRole="Order" />
+      </EntityType>
+      <EntityType Name="OrderLine">
+        <Key>
+          <PropertyRef Name="InvoiceLineID" />
+        </Key>
+        <Property Name="InvoiceLineID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="OrderID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Quantity" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ProductName" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="Comment" Type="Edm.String" Nullable="true" MaxLength="512" Unicode="false" FixedLength="false" />
+        <Property Name="UnitPrice" Type="Edm.Decimal" Nullable="false" Precision="10" Scale="4" />
+        <Property Name="UnitCode" Type="Edm.String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+        <NavigationProperty Name="Order" Relationship="DataBaseModel.FK_OrderLine_Orders" FromRole="OrderLine" ToRole="Order" />
+      </EntityType>
+      <EntityType Name="Order">
+        <Key>
+          <PropertyRef Name="OrderID" />
+        </Key>
+        <Property Name="OrderID" Type="Edm.Int32" Nullable="false" p8:StoreGeneratedPattern="Identity" xmlns:p8="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="OrderCreated" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="OrderCreator" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <NavigationProperty Name="Devices" Relationship="DataBaseModel.FK_Devices_Orders" FromRole="Order" ToRole="Device" />
+        <NavigationProperty Name="Invoices" Relationship="DataBaseModel.FK_Invoices_Orders" FromRole="Order" ToRole="Invoice" />
+        <NavigationProperty Name="OrderLines" Relationship="DataBaseModel.FK_OrderLine_Orders" FromRole="Order" ToRole="OrderLine" />
+      </EntityType>
+      <Association Name="FK_Devices_Customers">
+        <End Role="Customer" Type="DataBaseModel.Customer" Multiplicity="1" />
+        <End Role="Device" Type="DataBaseModel.Device" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Customer">
+            <PropertyRef Name="CustomerID" />
+          </Principal>
+          <Dependent Role="Device">
+            <PropertyRef Name="CustomerID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Invoices_Customers">
+        <End Role="Customer" Type="DataBaseModel.Customer" Multiplicity="1" />
+        <End Role="Invoice" Type="DataBaseModel.Invoice" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Customer">
+            <PropertyRef Name="CustomerID" />
+          </Principal>
+          <Dependent Role="Invoice">
+            <PropertyRef Name="CustomerID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Devices_Invoices">
+        <End Role="Invoice" Type="DataBaseModel.Invoice" Multiplicity="0..1" />
+        <End Role="Device" Type="DataBaseModel.Device" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Invoice">
+            <PropertyRef Name="InvoiceID" />
+          </Principal>
+          <Dependent Role="Device">
+            <PropertyRef Name="InvoiceID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Devices_Orders">
+        <End Role="Order" Type="DataBaseModel.Order" Multiplicity="0..1" />
+        <End Role="Device" Type="DataBaseModel.Device" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Order">
+            <PropertyRef Name="OrderID" />
+          </Principal>
+          <Dependent Role="Device">
+            <PropertyRef Name="OrderID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_Invoices_Orders">
+        <End Role="Order" Type="DataBaseModel.Order" Multiplicity="1" />
+        <End Role="Invoice" Type="DataBaseModel.Invoice" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Order">
+            <PropertyRef Name="OrderID" />
+          </Principal>
+          <Dependent Role="Invoice">
+            <PropertyRef Name="OrderID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_OrderLine_Orders">
+        <End Role="Order" Type="DataBaseModel.Order" Multiplicity="1" />
+        <End Role="OrderLine" Type="DataBaseModel.OrderLine" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="Order">
+            <PropertyRef Name="OrderID" />
+          </Principal>
+          <Dependent Role="OrderLine">
+            <PropertyRef Name="OrderID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+    </Schema>
+    <Schema Namespace="HJ.DataLayer" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityContainer Name="DataBaseEntities" p7:LazyLoadingEnabled="true" m:IsDefaultEntityContainer="true" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntitySet Name="Customers" EntityType="DataBaseModel.Customer" />
+        <EntitySet Name="Products" EntityType="DataBaseModel.Product" />
+        <EntitySet Name="Devices" EntityType="DataBaseModel.Device" />
+        <EntitySet Name="Invoices" EntityType="DataBaseModel.Invoice" />
+        <EntitySet Name="OrderLines" EntityType="DataBaseModel.OrderLine" />
+        <EntitySet Name="Orders" EntityType="DataBaseModel.Order" />
+        <AssociationSet Name="FK_Devices_Customers" Association="DataBaseModel.FK_Devices_Customers">
+          <End Role="Customer" EntitySet="Customers" />
+          <End Role="Device" EntitySet="Devices" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Invoices_Customers" Association="DataBaseModel.FK_Invoices_Customers">
+          <End Role="Customer" EntitySet="Customers" />
+          <End Role="Invoice" EntitySet="Invoices" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Devices_Invoices" Association="DataBaseModel.FK_Devices_Invoices">
+          <End Role="Invoice" EntitySet="Invoices" />
+          <End Role="Device" EntitySet="Devices" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Devices_Orders" Association="DataBaseModel.FK_Devices_Orders">
+          <End Role="Order" EntitySet="Orders" />
+          <End Role="Device" EntitySet="Devices" />
+        </AssociationSet>
+        <AssociationSet Name="FK_Invoices_Orders" Association="DataBaseModel.FK_Invoices_Orders">
+          <End Role="Order" EntitySet="Orders" />
+          <End Role="Invoice" EntitySet="Invoices" />
+        </AssociationSet>
+        <AssociationSet Name="FK_OrderLine_Orders" Association="DataBaseModel.FK_OrderLine_Orders">
+          <End Role="Order" EntitySet="Orders" />
+          <End Role="OrderLine" EntitySet="OrderLines" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

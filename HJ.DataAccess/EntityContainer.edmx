@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DataBaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="DataBaseModelStoreContainer">
+          <EntitySet Name="Customers" EntityType="DataBaseModel.Store.Customers" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Devices" EntityType="DataBaseModel.Store.Devices" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Invoices" EntityType="DataBaseModel.Store.Invoices" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OrderLine" EntityType="DataBaseModel.Store.OrderLine" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Orders" EntityType="DataBaseModel.Store.Orders" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Products" EntityType="DataBaseModel.Store.Products" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Devices_Customers" Association="DataBaseModel.Store.FK_Devices_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Devices_Invoices" Association="DataBaseModel.Store.FK_Devices_Invoices">
+            <End Role="Invoices" EntitySet="Invoices" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Devices_Orders" Association="DataBaseModel.Store.FK_Devices_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Devices" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoices_Customers" Association="DataBaseModel.Store.FK_Invoices_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Invoices" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoices_Orders" Association="DataBaseModel.Store.FK_Invoices_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Invoices" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderLine_Orders" Association="DataBaseModel.Store.FK_OrderLine_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderLine" EntitySet="OrderLine" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustParentID" Type="int" />
+          <Property Name="AccountType" Type="varchar" Nullable="false" MaxLength="25" />
+          <Property Name="FirstName" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="MiddleName" Type="varchar" MaxLength="30" />
+          <Property Name="SurName" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="Title" Type="varchar" MaxLength="10" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="50" />
+          <Property Name="CompanyRole" Type="varchar" MaxLength="25" />
+          <Property Name="Telephone" Type="varchar" MaxLength="25" />
+          <Property Name="Mobile" Type="varchar" MaxLength="25" />
+          <Property Name="Fax" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="AdressLine1" Type="varchar" MaxLength="50" />
+          <Property Name="AdressLine2" Type="varchar" MaxLength="50" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
+          <Property Name="County" Type="nvarchar" MaxLength="25" />
+          <Property Name="Country" Type="nvarchar" MaxLength="25" />
+          <Property Name="PostCode" Type="varchar" MaxLength="50" />
+          <Property Name="CustomerNotes" Type="text" />
+        </EntityType>
+        <EntityType Name="Devices">
+          <Key>
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Name="DeviceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" />
+          <Property Name="InvoiceID" Type="int" />
+          <Property Name="DeviceLabel" Type="varchar" MaxLength="10" />
+          <Property Name="DeviceType" Type="varchar" MaxLength="10" />
+          <Property Name="IMEI" Type="int" Nullable="false" />
+          <Property Name="SimNumber" Type="int" />
+          <Property Name="SimProvider" Type="varchar" MaxLength="15" />
+          <Property Name="VoiceNumber" Type="varchar" MaxLength="15" />
+          <Property Name="ContractFrom" Type="datetime" />
+          <Property Name="ContractTo" Type="datetime" />
+          <Property Name="Comments" Type="text" />
+        </EntityType>
+        <EntityType Name="Invoices">
+          <Key>
+            <PropertyRef Name="InvoiceID" />
+          </Key>
+          <Property Name="InvoiceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
+          <Property Name="IsPaid" Type="bit" />
+        </EntityType>
+        <EntityType Name="OrderLine">
+          <Key>
+            <PropertyRef Name="InvoiceLineID" />
+          </Key>
+          <Property Name="InvoiceLineID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="UnitCode" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="UnitPrice" Type="smallmoney" Nullable="false" />
+          <Property Name="Comment" Type="varchar" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OrderCreated" Type="datetime" />
+          <Property Name="OrderCreator" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="varchar" Nullable="false" MaxLength="75" />
+          <Property Name="ProductCode" Type="varchar" MaxLength="10" />
+          <Property Name="ProductGroup" Type="varchar" MaxLength="75" />
+          <Property Name="ProductPrice" Type="smallmoney" Nullable="false" />
+          <Property Name="isDiscontinued" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Devices_Customers">
+          <End Role="Customers" Type="DataBaseModel.Store.Customers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Devices" Type="DataBaseModel.Store.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Devices_Invoices">
+          <End Role="Invoices" Type="DataBaseModel.Store.Invoices" Multiplicity="0..1" />
+          <End Role="Devices" Type="DataBaseModel.Store.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoices">
+              <PropertyRef Name="InvoiceID" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="InvoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Devices_Orders">
+          <End Role="Orders" Type="DataBaseModel.Store.Orders" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Devices" Type="DataBaseModel.Store.Devices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Devices">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoices_Customers">
+          <End Role="Customers" Type="DataBaseModel.Store.Customers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Invoices" Type="DataBaseModel.Store.Invoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Invoices">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoices_Orders">
+          <End Role="Orders" Type="DataBaseModel.Store.Orders" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Invoices" Type="DataBaseModel.Store.Invoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Invoices">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderLine_Orders">
+          <End Role="Orders" Type="DataBaseModel.Store.Orders" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OrderLine" Type="DataBaseModel.Store.OrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderLine">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DataBaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DataBaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="DataBaseModel.Customer" />
+          <EntitySet Name="Products" EntityType="DataBaseModel.Product" />
+          <EntitySet Name="Devices" EntityType="DataBaseModel.Device" />
+          <EntitySet Name="Invoices" EntityType="DataBaseModel.Invoice" />
+          <AssociationSet Name="FK_Devices_Customers" Association="DataBaseModel.FK_Devices_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Device" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoices_Customers" Association="DataBaseModel.FK_Invoices_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Devices_Invoices" Association="DataBaseModel.FK_Devices_Invoices">
+            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="Device" EntitySet="Devices" />
+          </AssociationSet>
+          <EntitySet Name="OrderLines" EntityType="DataBaseModel.OrderLine" />
+          <EntitySet Name="Orders" EntityType="DataBaseModel.Order" />
+          <AssociationSet Name="FK_Devices_Orders" Association="DataBaseModel.FK_Devices_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Device" EntitySet="Devices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoices_Orders" Association="DataBaseModel.FK_Invoices_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderLine_Orders" Association="DataBaseModel.FK_OrderLine_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderLine" EntitySet="OrderLines" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustParentID" Type="Int32" />
+          <Property Name="AccountType" Type="String" Nullable="false" MaxLength="25" Unicode="false" FixedLength="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="SurName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <Property Name="Title" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="CompanyRole" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Telephone" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Mobile" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Fax" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="AdressLine1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="AdressLine2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="County" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+          <Property Name="Country" Type="String" MaxLength="25" Unicode="true" FixedLength="false" />
+          <Property Name="PostCode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="CustomerNotes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Devices" Relationship="DataBaseModel.FK_Devices_Customers" FromRole="Customer" ToRole="Device" />
+          <NavigationProperty Name="Invoices" Relationship="DataBaseModel.FK_Invoices_Customers" FromRole="Customer" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" Nullable="false" MaxLength="75" Unicode="false" FixedLength="false" />
+          <Property Name="ProductGroup" Type="String" MaxLength="75" Unicode="false" FixedLength="false" />
+          <Property Name="ProductPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="String" Name="ProductCode" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="isDiscontinued" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Device">
+          <Key>
+            <PropertyRef Name="DeviceID" />
+          </Key>
+          <Property Type="Int32" Name="DeviceID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="Int32" Name="OrderID" />
+          <Property Type="Int32" Name="InvoiceID" />
+          <Property Type="String" Name="DeviceLabel" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DeviceType" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="IMEI" Nullable="false" />
+          <Property Type="Int32" Name="SimNumber" />
+          <Property Type="String" Name="SimProvider" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="VoiceNumber" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ContractFrom" />
+          <Property Type="DateTime" Name="ContractTo" />
+          <Property Type="String" Name="Comments" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer" Relationship="DataBaseModel.FK_Devices_Customers" FromRole="Device" ToRole="Customer" />
+          <NavigationProperty Name="Invoice" Relationship="DataBaseModel.FK_Devices_Invoices" FromRole="Device" ToRole="Invoice" />
+          <NavigationProperty Name="Order" Relationship="DataBaseModel.FK_Devices_Orders" FromRole="Device" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="InvoiceID" />
+          </Key>
+          <Property Type="Int32" Name="InvoiceID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="DateTime" Name="InvoiceDate" Nullable="false" />
+          <Property Type="Boolean" Name="IsPaid" />
+          <NavigationProperty Name="Customer" Relationship="DataBaseModel.FK_Invoices_Customers" FromRole="Invoice" ToRole="Customer" />
+          <NavigationProperty Name="Devices" Relationship="DataBaseModel.FK_Devices_Invoices" FromRole="Invoice" ToRole="Device" />
+          <Property Type="Int32" Name="OrderID" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="DataBaseModel.FK_Invoices_Orders" FromRole="Invoice" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Devices_Customers">
+          <End Type="DataBaseModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="DataBaseModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoices_Customers">
+          <End Type="DataBaseModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="DataBaseModel.Invoice" Role="Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Devices_Invoices">
+          <End Type="DataBaseModel.Invoice" Role="Invoice" Multiplicity="0..1" />
+          <End Type="DataBaseModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="InvoiceID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="InvoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="OrderLine">
+          <Key>
+            <PropertyRef Name="InvoiceLineID" />
+          </Key>
+          <Property Type="Int32" Name="InvoiceLineID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="OrderID" Nullable="false" />
+          <Property Type="Int32" Name="Quantity" Nullable="false" />
+          <Property Type="String" Name="ProductName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Comment" MaxLength="512" FixedLength="false" Unicode="false" />
+          <Property Type="Decimal" Name="UnitPrice" Nullable="false" Precision="10" Scale="4" />
+          <NavigationProperty Name="Order" Relationship="DataBaseModel.FK_OrderLine_Orders" FromRole="OrderLine" ToRole="Order" />
+          <Property Type="String" Name="UnitCode" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Type="Int32" Name="OrderID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="OrderCreated" />
+          <Property Type="String" Name="OrderCreator" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Devices" Relationship="DataBaseModel.FK_Devices_Orders" FromRole="Order" ToRole="Device" />
+          <NavigationProperty Name="Invoices" Relationship="DataBaseModel.FK_Invoices_Orders" FromRole="Order" ToRole="Invoice" />
+          <NavigationProperty Name="OrderLines" Relationship="DataBaseModel.FK_OrderLine_Orders" FromRole="Order" ToRole="OrderLine" />
+        </EntityType>
+        <Association Name="FK_Devices_Orders">
+          <End Type="DataBaseModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="DataBaseModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoices_Orders">
+          <End Type="DataBaseModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="DataBaseModel.Invoice" Role="Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderLine_Orders">
+          <End Type="DataBaseModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="DataBaseModel.OrderLine" Role="OrderLine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderLine">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DataBaseModelStoreContainer" CdmEntityContainer="DataBaseEntities">
+          <EntitySetMapping Name="Customers"><EntityTypeMapping TypeName="DataBaseModel.Customer"><MappingFragment StoreEntitySet="Customers">
+            <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+            <ScalarProperty Name="CustParentID" ColumnName="CustParentID" />
+            <ScalarProperty Name="AccountType" ColumnName="AccountType" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+            <ScalarProperty Name="SurName" ColumnName="SurName" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+            <ScalarProperty Name="CompanyRole" ColumnName="CompanyRole" />
+            <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+            <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+            <ScalarProperty Name="Fax" ColumnName="Fax" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="AdressLine1" ColumnName="AdressLine1" />
+            <ScalarProperty Name="AdressLine2" ColumnName="AdressLine2" />
+            <ScalarProperty Name="City" ColumnName="City" />
+            <ScalarProperty Name="County" ColumnName="County" />
+            <ScalarProperty Name="Country" ColumnName="Country" />
+            <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+            <ScalarProperty Name="CustomerNotes" ColumnName="CustomerNotes" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Products"><EntityTypeMapping TypeName="DataBaseModel.Product"><MappingFragment StoreEntitySet="Products">
+            <ScalarProperty Name="isDiscontinued" ColumnName="isDiscontinued" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+            <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+            <ScalarProperty Name="ProductGroup" ColumnName="ProductGroup" />
+            <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Devices">
+            <EntityTypeMapping TypeName="DataBaseModel.Device">
+              <MappingFragment StoreEntitySet="Devices">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ContractTo" ColumnName="ContractTo" />
+                <ScalarProperty Name="ContractFrom" ColumnName="ContractFrom" />
+                <ScalarProperty Name="VoiceNumber" ColumnName="VoiceNumber" />
+                <ScalarProperty Name="SimProvider" ColumnName="SimProvider" />
+                <ScalarProperty Name="SimNumber" ColumnName="SimNumber" />
+                <ScalarProperty Name="IMEI" ColumnName="IMEI" />
+                <ScalarProperty Name="DeviceType" ColumnName="DeviceType" />
+                <ScalarProperty Name="DeviceLabel" ColumnName="DeviceLabel" />
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="DeviceID" ColumnName="DeviceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoices">
+            <EntityTypeMapping TypeName="DataBaseModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoices">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderLines">
+            <EntityTypeMapping TypeName="DataBaseModel.OrderLine">
+              <MappingFragment StoreEntitySet="OrderLine">
+                <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="InvoiceLineID" ColumnName="InvoiceLineID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="DataBaseModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="OrderCreator" ColumnName="OrderCreator" />
+                <ScalarProperty Name="OrderCreated" ColumnName="OrderCreated" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1" ZoomLevel="94">
+        <EntityTypeShape EntityType="DataBaseModel.Customer" Width="1.5" PointX="3.25" PointY="0.5" Height="4.8648079427083326" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseModel.Product" Width="1.5" PointX="7.25" PointY="4.375" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseModel.Device" Width="1.5" PointX="12.75" PointY="0.5" Height="4.0956022135416656" />
+        <EntityTypeShape EntityType="DataBaseModel.Invoice" Width="1.5" PointX="5.375" PointY="1.375" Height="2.5571907552083326" />
+        <AssociationConnector Association="DataBaseModel.FK_Devices_Customers" >
+          <ConnectorPoint PointX="4.75" PointY="0.90625" />
+          <ConnectorPoint PointX="12.75" PointY="0.90625" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataBaseModel.FK_Invoices_Customers" >
+          <ConnectorPoint PointX="4.75" PointY="2.6535953776041663" />
+          <ConnectorPoint PointX="5.375" PointY="2.6535953776041663" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataBaseModel.FK_Devices_Invoices" ManuallyRouted="false" >
+          <ConnectorPoint PointX="6.875" PointY="1.59375" />
+          <ConnectorPoint PointX="12.75" PointY="1.59375" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="DataBaseModel.OrderLine" Width="1.5" PointX="10.125" PointY="2.75" Height="2.3648893229166656" />
+        <EntityTypeShape EntityType="DataBaseModel.Order" Width="1.5" PointX="7.25" PointY="1.875" Height="2.1725878906249996" />
+        <AssociationConnector Association="DataBaseModel.FK_Devices_Orders" >
+          <ConnectorPoint PointX="8.75" PointY="2.28125" />
+          <ConnectorPoint PointX="12.75" PointY="2.28125" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataBaseModel.FK_Invoices_Orders" >
+          <ConnectorPoint PointX="7.25" PointY="2.9035953776041663" />
+          <ConnectorPoint PointX="6.875" PointY="2.9035953776041663" />
+        </AssociationConnector>
+        <AssociationConnector Association="DataBaseModel.FK_OrderLine_Orders" >
+          <ConnectorPoint PointX="8.75" PointY="3.3987939453125" />
+          <ConnectorPoint PointX="10.125" PointY="3.3987939453125" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
