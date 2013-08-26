@@ -34,7 +34,7 @@ namespace HJ.Shell
 
         protected override ILoggerFacade CreateLogger()
         {
-            return new Log4NetAdapter();
+            return new NLogAdapter();
         }
 
         protected override IModuleCatalog CreateModuleCatalog()

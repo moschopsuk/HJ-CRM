@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using log4net;
 using Microsoft.Practices.Prism.Logging;
+using NLog;
 
 
 namespace HJ.Shell.Adapters
 {
-    class Log4NetAdapter : ILoggerFacade
+    class NLogAdapter : ILoggerFacade
     {
         #region Fields
 
         // Member variables
-        private readonly ILog _logger = LogManager.GetLogger(typeof(Log4NetAdapter)); 
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
 
         #endregion
 
-        public Log4NetAdapter()
+        public NLogAdapter()
         {
-            log4net.Config.XmlConfigurator.Configure();
+
         }
 
         #region ILoggerFacade Members

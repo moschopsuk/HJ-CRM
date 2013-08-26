@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HJ.DataAccess", "HJ.DataAccess\HJ.DataAccess.csproj", "{0D7B8B20-BCFF-4D80-AE63-C3A9C5118CCF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HJ.Infrastructue", "HJ.Infrastructue\HJ.Infrastructue.csproj", "{89F942BB-7432-4E03-9EF2-8FBA50162EC9}"
